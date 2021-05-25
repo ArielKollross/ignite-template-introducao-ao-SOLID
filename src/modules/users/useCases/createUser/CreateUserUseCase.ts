@@ -10,7 +10,7 @@ class CreateUserUseCase {
   constructor(private usersRepository: IUsersRepository) {}
 
   execute({ email, name }: IRequest): User {
-    // Complete aqui
+    const { email, name } = request.body
   }
 }
 
