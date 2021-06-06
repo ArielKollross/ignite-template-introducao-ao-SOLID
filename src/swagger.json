@@ -11,6 +11,8 @@
                 "tags": ["Users"],
                 "summary": "Create a new user",
                 "requestBody": {
+                    "required": true,
+                    "description": "Campos para criação de um novo usuário",
                     "content": {
                         "application/json": {
                             "schema": {
@@ -55,15 +57,7 @@
                                             "type": "number"
                                         }
                                     },
-                                    "example": {
-                                        "id": "123e4567-e89b-12d3-a456-426655440000",
-                                        "name": "batman",
-                                        "email": "batman@email.com",
-                                        "admin": false,
-                                        "created_at": 1622941174073,
-                                        "updated_at": 1622941174073
-
-                                    }
+                                    "$ref": "#/components/schemas/user-example"
                                 }
                             }
                         }
@@ -96,14 +90,13 @@
                         "name": "user_id",
                         "required": true,
                         "in": "header",
-                        "description": "admin user uuid",
                         "schema": {
                             "type": "string"
                         }
                     }
                 ],
                 "responses": {
-                    "201": {
+                    "200": {
                         "$ref": "#/components/responses/success"
                     },
                     "404": {
@@ -163,12 +156,35 @@
         }
     },
     "components": {
+        "examples": {
+            "user": {
+                "value":{
+                    "id": "123e4567-e89b-12d3-a456-426655440000",
+                    "name": "batman",
+                    "email": "batman@email.com",
+                    "admin": false,
+                    "created_at": 1622941174073,
+                    "updated_at": 1622941174073
+                }
+            }
+        },
+        "schemas": {
+            "user-example": {
+                "example": {
+                    "id": "123e4567-e89b-12d3-a456-426655440000",
+                    "name": "batman",
+                    "email": "batman@email.com",
+                    "admin": false,
+                    "created_at": 1622941174073,
+                    "updated_at": 1622941174073
+                }
+            }
+        },
         "parameters": {
             "user_id":   {
                 "name": "user_id",
                 "required": true,
                 "in": "path",
-                "description": "user uuid",
                 "schema": {
                     "type": "string"
                 }
