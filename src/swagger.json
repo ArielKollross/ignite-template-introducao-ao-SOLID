@@ -69,7 +69,22 @@
                         }
                     },
                     "400": {
-                        "description": "Email already exists"
+                        "description": "Email already exists",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "Error": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "example": {
+                                        "Error": "Email already exists"
+                                    }
+                                }
+                            }
+                        }
                     }
                 }
             },
@@ -81,16 +96,33 @@
                         "name": "user_id",
                         "required": true,
                         "in": "header",
-                        "description": "admin user uuid"
-                    
+                        "description": "admin user uuid",
+                        "schema": {
+                            "type": "string"
+                        }
                     }
                 ],
                 "responses": {
                     "201": {
-                        "description": "Success"
+                        "$ref": "#/components/responses/success"
                     },
                     "404": {
-                        "description": "User not found"
+                        "description": "User not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "Error": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "example": {
+                                        "Error": "User not found"
+                                    }
+                                }
+                            }
+                        }
                     }
                 }
             }
@@ -100,22 +132,14 @@
                 "tags": ["Users"],
                 "summary": "Give admin access to user",
                 "parameters": [
-                    {
-                        "name": "user_id",
-                        "required": true,
-                        "in": "path",
-                        "description": "user uuid",
-                        "schema": {
-                            "type": "string"
-                        }
-                    }
+                    { "$ref": "#/components/parameters/user_id" }
                 ],
                 "responses": {
                     "201": {
-                        "description": "Success"
+                        "$ref": "#/components/responses/success"
                     },
                     "404": {
-                        "description": "User not found"
+                        "$ref": "#/components/responses/user-not-found"
                     }
                 }
             }
@@ -125,22 +149,50 @@
                 "tags": ["Users"],
                 "summary": "Get user information by user id",
                 "parameters": [
-                    {
-                        "name": "user_id",
-                        "required": true,
-                        "in": "path",
-                        "description": "user uuid",
-                        "schema": {
-                            "type": "string"
-                        }
-                    }
+                    { "$ref": "#/components/parameters/user_id" }
                 ],
                 "responses": {
                     "201": {
-                        "description": "Success"
+                        "$ref": "#/components/responses/success"
                     },
                     "404": {
-                        "description": "User not found"
+                        "$ref": "#/components/responses/user-not-found"
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "parameters": {
+            "user_id":   {
+                "name": "user_id",
+                "required": true,
+                "in": "path",
+                "description": "user uuid",
+                "schema": {
+                    "type": "string"
+                }
+            }
+        },
+        "responses": {
+            "success": {
+                "description": "Success"
+            },
+            "user-not-found": {
+                "description": "User not found",
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "Error": {
+                                    "type": "string"
+                                }
+                            },
+                            "example": {
+                                "Error": "User not found"
+                            }
+                        }
                     }
                 }
             }
