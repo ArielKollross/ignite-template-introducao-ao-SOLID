@@ -1,0 +1,149 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Desafio -1 - Introdução ao SOLID",
+        "description": "Essa será uma aplicação de listagem e cadastro de usuários. Para que a listagem de usuários funcione, o usuário que solicita a listagem deve ser um admin.",
+        "version": "1.0.0"
+    },
+    "paths": {
+        "/users": {
+            "post": {
+                "tags": ["Users"],
+                "summary": "Create a new user",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "name": {
+                                        "type": "string"
+                                    },
+                                    "email": {
+                                        "type": "string"
+                                    }
+                                },
+                                "example": {
+                                    "name": "batman",
+                                    "email": "batman@email.com"
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "created",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "name": {
+                                            "type": "string"
+                                        },
+                                        "email": {
+                                            "type": "string"
+                                        },
+                                        "admin": {
+                                            "type": "boolean"
+                                        },
+                                        "created_at": {
+                                            "type": "number"
+                                        },
+                                        "updated_at": {
+                                            "type": "number"
+                                        }
+                                    },
+                                    "example": {
+                                        "id": "123e4567-e89b-12d3-a456-426655440000",
+                                        "name": "batman",
+                                        "email": "batman@email.com",
+                                        "admin": false,
+                                        "created_at": 1622941174073,
+                                        "updated_at": 1622941174073
+
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Email already exists"
+                    }
+                }
+            },
+            "get": {
+                "tags": ["Users"],
+                "summary": "Get user information by user id",
+                "parameters": [
+                   {
+                        "name": "user_id",
+                        "required": true,
+                        "in": "header",
+                        "description": "admin user uuid"
+                    
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Success"
+                    },
+                    "404": {
+                        "description": "User not found"
+                    }
+                }
+            }
+        },
+        "/users/:user_id/admin": {
+            "patch": {
+                "tags": ["Users"],
+                "summary": "Give admin access to user",
+                "parameters": [
+                    {
+                        "name": "user_id",
+                        "required": true,
+                        "in": "path",
+                        "description": "user uuid",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Success"
+                    },
+                    "404": {
+                        "description": "User not found"
+                    }
+                }
+            }
+        },
+        "/users/:user_id/": {
+            "get": {
+                "tags": ["Users"],
+                "summary": "Get user information by user id",
+                "parameters": [
+                    {
+                        "name": "user_id",
+                        "required": true,
+                        "in": "path",
+                        "description": "user uuid",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Success"
+                    },
+                    "404": {
+                        "description": "User not found"
+                    }
+                }
+            }
+        }
+    }
+}
